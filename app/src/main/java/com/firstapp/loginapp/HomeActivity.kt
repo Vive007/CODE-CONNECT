@@ -9,10 +9,18 @@ import android.widget.TextView
 
 
 import android.app.Activity
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.widget.ImageView
+import com.google.android.material.tabs.TabLayout.TabGravity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.Tag
 
 
 class HomeActivity : AppCompatActivity() {
+    private val TAG:String="CHECK_RESPONSE"
 
     companion object {
         const val PROFILE_REQUEST_CODE = 1
@@ -57,6 +65,8 @@ class HomeActivity : AppCompatActivity() {
             // Retrieve the data from the intent
             val name = data?.getStringExtra("NAME")
             val codingProfile = data?.getStringExtra("CODING_PROFILE")
+            // fetch data from api
+            getData()
 
             // Display the name and coding profile in the Home page
             val welcomeMessageTextView = findViewById<TextView>(R.id.messageTextView)
@@ -66,5 +76,34 @@ class HomeActivity : AppCompatActivity() {
             codingProfileTextView.text = "Coding Profile: $codingProfile"
 
         }
+    }
+
+    private fun getData() {
+        RetrofitInstance.apiInterface.getData().enqueue(object : Callback<ResponseDataClass?> {
+            override fun onResponse(
+                call: Call<ResponseDataClass?>,
+                response: Response<ResponseDataClass?>
+            ) {
+               if(response.isSuccessful)
+               {
+                   // getting 200
+                   response.body()?.let {
+                       // access the list of result
+                       val resultList=it.result
+                       for(resultX in resultList)
+                       {
+                           Log.i(TAG, "onResponse: ${resultX.firstName} ${resultX.lastName}")
+                           Log.i(TAG, "Avatar: ${resultX.avatar}")
+                           Log.i(TAG, "Contribution: ${resultX.contribution}")
+                           // Add more properties as needed
+                       }
+                   }
+               }
+            }
+
+            override fun onFailure(call: Call<ResponseDataClass?>, t: Throwable) {
+                Log.i(TAG, "onFailure: ${t.message}")
+            }
+        })
     }
 }
