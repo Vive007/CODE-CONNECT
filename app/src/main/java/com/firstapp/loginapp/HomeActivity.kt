@@ -18,6 +18,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.Tag
 
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class HomeActivity : AppCompatActivity() {
     private val TAG:String="CHECK_RESPONSE"
@@ -58,10 +60,30 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // Handle the result from ProfileActivity
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        if (requestCode == PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Retrieve the data from the intent
+            val name = data?.getStringExtra("NAME")
+            val codingProfile = data?.getStringExtra("CODING_PROFILE")
+            // fetch data from api
+            if (codingProfile != null) {
+                getData(codingProfile)
+            }
 
-    private fun getData() {
-        RetrofitInstance.apiInterface.getData().enqueue(object : Callback<ResponseDataClass?> {
+            // Display the name and coding profile in the Home page
+//            val welcomeMessageTextView = findViewById<TextView>(R.id.messageTextView)
+//            val codingProfileTextView = findViewById<TextView>(R.id.messageTextView2)
+//
+//            welcomeMessageTextView.text = "Welcome, $name!"
+//            codingProfileTextView.text = "Coding Profile: $codingProfile"
+
+        }
+    }
+
+    private fun getData( coding:String) {
+        RetrofitInstance.apiInterface.getData(coding).enqueue(object : Callback<ResponseDataClass?> {
             override fun onResponse(
                 call: Call<ResponseDataClass?>,
                 response: Response<ResponseDataClass?>
@@ -94,6 +116,22 @@ class HomeActivity : AppCompatActivity() {
 
                        if (!resultList.isNullOrEmpty()) {
                            val firstResult = resultList[0]
+                           // now handling to display image
+
+
+
+                           val responseData = response.body()
+
+                           // Assuming responseData is not null and has an avatar property
+                           val avatarUrl = responseData?.result?.get(0)?.avatar
+
+                           // Load the avatar image into the ImageView using Glide (or Picasso)
+                           Glide.with(applicationContext)
+                               .load(avatarUrl)
+                               .apply(RequestOptions.circleCropTransform()) // Optional: Apply a circular transformation
+                               .placeholder(R.drawable.baseline_person_24) // Placeholder image while loading
+                               .error(R.drawable.baseline_person_24) // Error image if loading fails
+                               .into(findViewById(R.id.createProfileButton))
 
                            // Set the text for dynamically created TextViews
                            findViewById<TextView>(R.id.firstNameTextView).text = "First Name: ${firstResult.firstName}"

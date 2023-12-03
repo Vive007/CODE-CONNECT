@@ -73,12 +73,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/searchLayout"
         android:layout_marginTop="16dp">
-
+        <ImageView
+            android:id="@+id/avatarImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/default_profile_image"
+        android:scaleType="centerCrop"/>
         <!-- Dynamically created TextViews for ResultX properties -->
         <TextView
             android:id="@+id/firstNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/avatarImageView"
             android:layout_marginStart="16dp"
             android:text="First Name: "
             android:textSize="16sp"/>
