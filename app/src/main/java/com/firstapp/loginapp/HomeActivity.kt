@@ -58,25 +58,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // Handle the result from ProfileActivity
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
-            // Retrieve the data from the intent
-            val name = data?.getStringExtra("NAME")
-            val codingProfile = data?.getStringExtra("CODING_PROFILE")
-            // fetch data from api
-            getData()
-
-            // Display the name and coding profile in the Home page
-            val welcomeMessageTextView = findViewById<TextView>(R.id.messageTextView)
-            val codingProfileTextView = findViewById<TextView>(R.id.messageTextView2)
-
-            welcomeMessageTextView.text = "Welcome, $name!"
-            codingProfileTextView.text = "Coding Profile: $codingProfile"
-
-        }
-    }
 
     private fun getData() {
         RetrofitInstance.apiInterface.getData().enqueue(object : Callback<ResponseDataClass?> {
@@ -92,12 +74,40 @@ class HomeActivity : AppCompatActivity() {
                        val resultList=it.result
                        for(resultX in resultList)
                        {
-                           Log.i(TAG, "onResponse: ${resultX.firstName} ${resultX.lastName}")
-                           Log.i(TAG, "Avatar: ${resultX.avatar}")
-                           Log.i(TAG, "Contribution: ${resultX.contribution}")
+                           Log.i(TAG, "onResponse:")
+                           Log.i(TAG, "  firstName: ${resultX.firstName}")
+                           Log.i(TAG, "  lastName: ${resultX.lastName}")
+                           Log.i(TAG, "  lastOnlineTimeSeconds: ${resultX.lastOnlineTimeSeconds}")
+                           Log.i(TAG, "  rating: ${resultX.rating}")
+                           Log.i(TAG, "  friendOfCount: ${resultX.friendOfCount}")
+                           Log.i(TAG, "  titlePhoto: ${resultX.titlePhoto}")
+                           Log.i(TAG, "  handle: ${resultX.handle}")
+                           Log.i(TAG, "  avatar: ${resultX.avatar}")
+                           Log.i(TAG, "  contribution: ${resultX.contribution}")
+                           Log.i(TAG, "  organization: ${resultX.organization}")
+                           Log.i(TAG, "  rank: ${resultX.rank}")
+                           Log.i(TAG, "  maxRating: ${resultX.maxRating}")
+                           Log.i(TAG, "  registrationTimeSeconds: ${resultX.registrationTimeSeconds}")
+                           Log.i(TAG, "  maxRank: ${resultX.maxRank}")
                            // Add more properties as needed
                        }
+
+                       if (!resultList.isNullOrEmpty()) {
+                           val firstResult = resultList[0]
+
+                           // Set the text for dynamically created TextViews
+                           findViewById<TextView>(R.id.firstNameTextView).text = "First Name: ${firstResult.firstName}"
+                           findViewById<TextView>(R.id.lastNameTextView).text = "Last Name: ${firstResult.lastName}"
+                           findViewById<TextView>(R.id.handleTextView).text = "Handle: ${firstResult.handle}"
+                           findViewById<TextView>(R.id.ratingTextView).text = "Rating: ${firstResult.rating}"
+                           findViewById<TextView>(R.id.rankTextView).text = "Rank: ${firstResult.rank}"
+                           findViewById<TextView>(R.id.maxratingTextView).text = "MaxRating: ${firstResult.maxRating}"
+                           findViewById<TextView>(R.id.maxrankTextView).text = "MaxRank: ${firstResult.maxRank}"
+
+                           // Set more TextViews for other properties as needed
+                       }
                    }
+
                }
             }
 

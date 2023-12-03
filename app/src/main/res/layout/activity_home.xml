@@ -66,26 +66,98 @@
 
     </RelativeLayout>
 
+<!--    body content-->
+    <RelativeLayout
+        android:id="@+id/userDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchLayout"
+        android:layout_marginTop="16dp">
+
+        <!-- Dynamically created TextViews for ResultX properties -->
+        <TextView
+            android:id="@+id/firstNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="First Name: "
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/lastNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/firstNameTextView"
+            android:layout_marginStart="16dp"
+            android:text="Last Name: "
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/handleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lastNameTextView"
+            android:layout_marginStart="16dp"
+            android:text="Handle: "
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/ratingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/handleTextView"
+            android:layout_marginStart="16dp"
+            android:text="Rating: "
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/maxratingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingTextView"
+            android:layout_marginStart="16dp"
+            android:text="Max_Rating: "
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/rankTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/maxratingTextView"
+            android:layout_marginStart="16dp"
+            android:text="Current_Rank: "
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/maxrankTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rankTextView"
+            android:layout_marginStart="16dp"
+            android:text="Max_Rank: "
+            android:textSize="16sp"/>
+
+        <!-- Add more TextViews for other properties as needed -->
+
+    </RelativeLayout>
+
 
     <!-- Bottom Navigation -->
 
-    <TextView
-        android:id="@+id/messageTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/searchLayout"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Your Profiel Display here!"
-        android:textSize="16sp" />
-    <TextView
-        android:id="@+id/messageTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/messageTextView"
-        android:text="Your Profiel Display here!"
-        android:textSize="16sp" />
+<!--    <TextView-->
+<!--        android:id="@+id/messageTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/searchLayout"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:text="Your Profiel Display here!"-->
+<!--        android:textSize="16sp" />-->
+<!--    <TextView-->
+<!--        android:id="@+id/messageTextView2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/messageTextView"-->
+<!--        android:text="Your Profiel Display here!"-->
+<!--        android:textSize="16sp" />-->
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
