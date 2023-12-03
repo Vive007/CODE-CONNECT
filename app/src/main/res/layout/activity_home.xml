@@ -1,69 +1,142 @@
-<!-- res/layout/activity_home.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".HomeActivity">
+    tools:context=".MainActivity">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <!-- User Profile Icon -->
+        <ImageView
+            android:id="@+id/createProfileButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_person_24"
+            android:layout_gravity="start"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"/>
+
+        <!-- Welcome Message -->
+        <TextView
+            android:id="@+id/welcomeMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Welcome, John Doe" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Search Bar -->
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/white"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:drawablePadding="8dp"
+            android:hint="Search"
+            android:padding="16dp" />
+
+    </RelativeLayout>
+
+
+    <!-- Bottom Navigation -->
 
     <TextView
-        android:id="@+id/welcomeMessage"
+        android:id="@+id/messageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <!-- Button for logging out -->
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/welcomeMessage"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="569dp"
-        android:layout_marginEnd="151dp"
-        android:text="Logout" />
-
-    <!-- Button for creating a profile -->
-    <Button
-        android:id="@+id/createProfileButton"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="274dp"
-        android:background="@drawable/ic_create_profile"
-        android:text="Create Profile" />
-
-    <!-- Display profile information -->
-    <ImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/createProfileButton"
+        android:layout_below="@id/searchLayout"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/default_profile_image" />
-
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Your Profiel Display here!"
+        android:textSize="16sp" />
     <TextView
-        android:id="@+id/profileInfoTextView"
+        android:id="@+id/messageTextView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profileImageView"
-        android:layout_marginTop="189dp"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:layout_below="@id/messageTextView"
+        android:text="Your Profiel Display here!"
+        android:textSize="16sp" />
 
-    <RatingBar
-        android:id="@+id/profileRatingBar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profileInfoTextView"
-        android:layout_marginTop="8dp"
-        android:layout_centerHorizontal="true"
-        style="?android:attr/ratingBarStyleSmall" />
+        android:layout_alignParentBottom="true"
+        android:background="?attr/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <!-- Home Icon -->
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_home_24"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Chat Icon -->
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_chat_24"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Discussion Icon -->
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_groups_2_24"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Help Icon -->
+        <ImageView
+        android:id="@+id/logoutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_logout_24"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.widget.TextView
 
 
 import android.app.Activity
+import android.widget.ImageView
 
 
 class HomeActivity : AppCompatActivity() {
@@ -29,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
         welcomeMessage.text = "Welcome, $userName!"
 
         // Logout button to simulate a logout action
-        val logoutButton = findViewById<Button>(R.id.logoutButton)
+        val logoutButton = findViewById<ImageView>(R.id.logoutButton)
         logoutButton.setOnClickListener {
             // You can add your logout logic here
             // For example, navigate back to the login screen
@@ -41,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         // Create Profile button to navigate to ProfileActivity
-        val createProfileButton = findViewById<Button>(R.id.createProfileButton)
+        val createProfileButton = findViewById<ImageView>(R.id.createProfileButton)
         createProfileButton.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivityForResult(intent, PROFILE_REQUEST_CODE)
@@ -58,8 +59,12 @@ class HomeActivity : AppCompatActivity() {
             val codingProfile = data?.getStringExtra("CODING_PROFILE")
 
             // Display the name and coding profile in the Home page
-            val profileInfoTextView = findViewById<TextView>(R.id.profileInfoTextView)
-            profileInfoTextView.text = "Name: $name\nCoding Profile: $codingProfile"
+            val welcomeMessageTextView = findViewById<TextView>(R.id.messageTextView)
+            val codingProfileTextView = findViewById<TextView>(R.id.messageTextView2)
+
+            welcomeMessageTextView.text = "Welcome, $name!"
+            codingProfileTextView.text = "Coding Profile: $codingProfile"
+
         }
     }
 }
