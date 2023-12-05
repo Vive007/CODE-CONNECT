@@ -10,6 +10,8 @@ import android.widget.TextView
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
 import com.google.android.material.tabs.TabLayout.TabGravity
@@ -18,19 +20,45 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.Tag
 
+
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
     private val TAG:String="CHECK_RESPONSE"
 
     companion object {
-        const val PROFILE_REQUEST_CODE = 1
+        const val PROFILE_REQUEST_CODE = 0
+        const val GALLERY_REQUEST_CODE = 1 // You can use any integer value
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        // accessing data from different database.
+
+
+        val auth = FirebaseAuth.getInstance()
+
+// Check if a user is signed in
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // User is signed in, you can access user information
+            val name = currentUser.displayName
+            val email = currentUser.email
+            val phoneNumber = currentUser.phoneNumber
+            val firebaseUser = FirebaseAuth.getInstance().currentUser
+            val uid = firebaseUser?.uid
+            Log.i(TAG, "UniqueID: ${uid}")// getting UniqueID of user
+
+            // Use the retrieved information as needed
+            // ...
+
+            // Note: displayName and phoneNumber might be null if not set by the user
+        }
 
         // Assuming you have passed the user's name from the login activity
         val userName = intent.getStringExtra("USER_NAME")
@@ -51,26 +79,65 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
-        // Create Profile button to navigate to ProfileActivity
+        // create profile to upload image
         val createProfileButton = findViewById<ImageView>(R.id.createProfileButton)
         createProfileButton.setOnClickListener {
+            // Launch the image picker intent
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+        }
+
+        // Create Profile button to navigate to ProfileActivity
+        val createCodingProfileButton = findViewById<ImageView>(R.id.createCodingProfile)
+        createCodingProfileButton.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivityForResult(intent, PROFILE_REQUEST_CODE)
         }
+
+//        val imagePath = "/home/vivek007/Desktop/admin.jpg"
+//
+//// Load the image using Glide
+//        Glide.with(this)
+//            .load("file://$imagePath") // Use file:// scheme for local files
+//            .into(createProfileButton)
+
+        // if signed user already submitted their coding platform and profile id will be displayed here
     }
 
     // Handle the result from ProfileActivity
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
-            // Retrieve the data from the intent
+            // Handle the result from ProfileActivity
             val name = data?.getStringExtra("NAME")
             val codingProfile = data?.getStringExtra("CODING_PROFILE")
-            // fetch data from api
+
             if (codingProfile != null) {
                 getData(codingProfile)
             }
+        } else if (requestCode == PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_CANCELED) {
+            // Handle if the user canceled the operation (e.g., pressing the back button)
+            // Add any specific logic you want to execute in this case
+        } else if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK) {
+            // Handle the result from the image picker
+            val selectedImageUri: Uri? = data?.data
+            Log.i(TAG, "imageUri: $selectedImageUri")
+            // Update your UI or upload the image to your server
+            // Example: Glide.with(applicationContext).load(selectedImageUri).into(createProfileButton)
+
+            // Display the selected image in the createProfileButton ImageView
+            Glide.with(applicationContext)
+                .load(selectedImageUri)
+                .apply(RequestOptions.circleCropTransform()) // Optional: Apply a circular transformation
+                .placeholder(R.drawable.baseline_person_24) // Placeholder image while loading
+                .error(R.drawable.baseline_person_24) // Error image if loading fails
+                .into(findViewById(R.id.createProfileButton))
+
+        }
+    }
+
+
 
             // Display the name and coding profile in the Home page
 //            val welcomeMessageTextView = findViewById<TextView>(R.id.messageTextView)
@@ -79,8 +146,7 @@ class HomeActivity : AppCompatActivity() {
 //            welcomeMessageTextView.text = "Welcome, $name!"
 //            codingProfileTextView.text = "Coding Profile: $codingProfile"
 
-        }
-    }
+
 
     private fun getData( coding:String) {
         RetrofitInstance.apiInterface.getData(coding).enqueue(object : Callback<ResponseDataClass?> {
@@ -123,15 +189,15 @@ class HomeActivity : AppCompatActivity() {
                            val responseData = response.body()
 
                            // Assuming responseData is not null and has an avatar property
-                           val avatarUrl = responseData?.result?.get(0)?.avatar
-
-                           // Load the avatar image into the ImageView using Glide (or Picasso)
-                           Glide.with(applicationContext)
-                               .load(avatarUrl)
-                               .apply(RequestOptions.circleCropTransform()) // Optional: Apply a circular transformation
-                               .placeholder(R.drawable.baseline_person_24) // Placeholder image while loading
-                               .error(R.drawable.baseline_person_24) // Error image if loading fails
-                               .into(findViewById(R.id.createProfileButton))
+//                           val avatarUrl = responseData?.result?.get(0)?.avatar
+//
+//                           // Load the avatar image into the ImageView using Glide (or Picasso)
+//                           Glide.with(applicationContext)
+//                               .load(avatarUrl)
+//                               .apply(RequestOptions.circleCropTransform()) // Optional: Apply a circular transformation
+//                               .placeholder(R.drawable.baseline_person_24) // Placeholder image while loading
+//                               .error(R.drawable.baseline_person_24) // Error image if loading fails
+//                               .into(findViewById(R.id.createProfileButton))
 
                            // Set the text for dynamically created TextViews
                            findViewById<TextView>(R.id.firstNameTextView).text = "First Name: ${firstResult.firstName}"

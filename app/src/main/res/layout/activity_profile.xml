@@ -7,7 +7,7 @@
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your name"/>
+        android:hint="Enter CODING PLATFORM  name"/>
 
     <EditText
         android:id="@+id/codingProfileEditText"
