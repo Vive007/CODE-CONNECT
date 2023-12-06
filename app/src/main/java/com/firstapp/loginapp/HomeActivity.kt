@@ -3,29 +3,24 @@ package com.firstapp.loginapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.TextView
 
 
 
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.net.Uri
 import android.provider.MediaStore
-import android.security.identity.AccessControlProfileId
 import android.util.Log
 import android.widget.ImageView
-import com.google.android.material.tabs.TabLayout.TabGravity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Tag
 
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.firstapp.loginapp.Database.DBHelper
 import com.google.firebase.auth.FirebaseAuth
-import retrofit2.Retrofit
 
 class HomeActivity : AppCompatActivity() {
     private val TAG:String="CHECK_RESPONSE"
@@ -59,10 +54,102 @@ class HomeActivity : AppCompatActivity() {
             // if this uid present in data base uid-> present in profile table means rgisterd user
 
 
+
+
+
+
+
             // don't move to create profile i have to  call the api wwth therir coding id
 
+            val  dbHelper = DBHelper(this)
+
+// Insert data into USERPROFILE table
+//            val Uid: String = "71gx3zSfOcdm2k5BQFibLPVed6Z2"
+//            val Name: String = "vivek kumar"
+//            val ImageUri:String = "content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000000034/ORIGINAL/NONE/image%2Fjpeg/1848661045"
+//
+//            val insertedId = dbHelper.insertUserProfile(Uid, Name, ImageUri)
+
+// read data from database
+            val cursor = dbHelper.readUserProfile()
+            var check =0
+            while (cursor.moveToNext()) {
+                val uidIndex = cursor.getColumnIndex("Uid")
+                val nameIndex = cursor.getColumnIndex("Name")
+                val imageUriIndex = cursor.getColumnIndex("ImageUri")
+
+                val storedUid = cursor.getString(uidIndex)
+                val storedName = cursor.getString(nameIndex)
+                val storedImageUri = cursor.getString(imageUriIndex)
+
+                // Do something with the retrieved data
+                Log.i(TAG, "Stored UID: $storedUid")
+                Log.i(TAG, "Stored Name: $storedName")
+                Log.i(TAG, "Stored ImageUri: $storedImageUri")
+
+                if(storedUid==uid)
+                {
+                    val selectedImageUri =storedImageUri
+                    // update profile
+                    Glide.with(applicationContext)
+                        .load(selectedImageUri)
+                        .apply(RequestOptions.circleCropTransform()) // Optional: Apply a circular transformation
+                        .placeholder(R.drawable.baseline_person_24) // Placeholder image while loading
+                        .error(R.drawable.baseline_person_24) // Error image if loading fails
+                        .into(findViewById(R.id.createProfileButton))
+
+                    // now call the api
+                    if (storedUid != null) {
+                        val cursor = dbHelper.readCodingProfile()
+
+                        while (cursor.moveToNext()) {
+                            val codingProfileIdIndex = cursor.getColumnIndex("Id")
+                            val uidIndex = cursor.getColumnIndex("Uid")
+                            val nameIndex = cursor.getColumnIndex("Pname")
+                            val codingProfileIndex = cursor.getColumnIndex("Pid")
+
+                            val codingProfileId = cursor.getInt(codingProfileIdIndex)
+                            val storedUid = cursor.getString(uidIndex)
+                            val storedName = cursor.getString(nameIndex)
+                            val storedCodingProfile = cursor.getString(codingProfileIndex)
+
+                            // Do something with the retrieved data
+                            Log.i(TAG, "Coding Profile ID: $codingProfileId")
+                            Log.i(TAG, "Stored UID: $storedUid")
+                            Log.i(TAG, "Stored Name: $storedName")
+                            Log.i(TAG, "Stored Coding Profile: $storedCodingProfile")
 
 
+                            // calling api
+                            if(storedName=="codeforces")
+                            {
+                                getData(storedCodingProfile)
+                            }else if(storedName=="leetcode")
+                            {
+                                getLeetcodeData(storedCodingProfile)
+
+                            }else
+                            {
+                                Log.i(TAG, "error message: Your coding profile not found")
+                            }
+                        }
+
+                        cursor.close()
+                    } else {
+                        Log.e(TAG, "User UID is null")
+                    }
+
+
+
+
+
+
+
+
+                }
+            }
+
+            cursor.close()
 
 
 
@@ -129,8 +216,71 @@ class HomeActivity : AppCompatActivity() {
 
         if (requestCode == PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
             // Handle the result from ProfileActivity
-            val name = data?.getStringExtra("NAME")?.lowercase()
-            val codingProfile = data?.getStringExtra("CODING_PROFILE")
+            val name: String? = data?.getStringExtra("NAME")?.lowercase()
+            val codingProfile: String? = data?.getStringExtra("CODING_PROFILE")
+
+            if (name != null && codingProfile != null) {
+                // now insert the coding data to database
+                val firebaseUser = FirebaseAuth.getInstance().currentUser
+                val uid: String? = firebaseUser?.uid
+
+                if (uid != null) {
+                    val dbHelper = DBHelper(this)
+                    // select
+                    val getiingId =dbHelper.getIdCodingProfile(uid,name,codingProfile);
+                    //update
+                    if (getiingId != null) {
+                        // Uid found, do something with it
+                        // run the update query
+                        val rowsAffected=  dbHelper.updateCodingProfile(getiingId,uid,name,codingProfile)
+
+                        if (rowsAffected > 0) {
+                            // Update was successful, and rowsAffected contains the number of rows updated
+                            Log.i(TAG, "Coding profile updated successfully. Rows affected: $rowsAffected")
+                        } else {
+                            // Update failed
+                            Log.e(TAG, "Failed to update coding profile.")
+                        }
+
+
+//                        Log.i(TAG, "Uid found: $resultUid")
+                        // so run the update query
+                    } else {
+                        // Uid not found
+                        // run the insert query
+                        dbHelper.insertCodingProfile(uid,name,codingProfile)
+
+
+                    }
+                    // insert
+
+
+
+//                    dbHelper.insertCodingProfile(uid, name, codingProfile)
+                } else {
+                    Log.e(TAG, "User UID is null")
+                }
+            } else {
+                Log.e(TAG, "Name or codingProfile is null")
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             if (codingProfile != null) {
                 // if name is codeforces then call getdata
@@ -155,6 +305,40 @@ class HomeActivity : AppCompatActivity() {
             // Handle the result from the image picker
             val selectedImageUri: Uri? = data?.data
             Log.i(TAG, "imageUri: $selectedImageUri")
+
+
+            // select image
+            // if exist then update
+            // else insert
+
+            val  dbHelper = DBHelper(this)
+            val firebaseUser = FirebaseAuth.getInstance().currentUser
+            val uid: String? = firebaseUser?.uid
+            val name: String = "vivek"
+
+            // select
+            if (uid != null) {
+                val confirm = dbHelper.readCustomUserProfile(uid)
+                if (confirm.moveToFirst()) {
+                    // User profile exists
+                    // Run the update query
+                    dbHelper.updateImageUri(uid, selectedImageUri)
+                } else {
+                    // User profile doesn't exist
+                    // Run the insert query
+                    dbHelper.insertUserProfile(uid, name, selectedImageUri)
+                }
+                confirm.close() // Close the cursor after using it
+            }
+
+
+
+
+
+
+
+
+
             // Update your UI or upload the image to your server
             // Example: Glide.with(applicationContext).load(selectedImageUri).into(createProfileButton)
 

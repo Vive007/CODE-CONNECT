@@ -83,6 +83,8 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.71828")
 
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("androidx.sqlite:sqlite:2.2.0")
+
 
 
 }
