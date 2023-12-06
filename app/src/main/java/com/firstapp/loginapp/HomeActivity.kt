@@ -121,10 +121,10 @@ class HomeActivity : AppCompatActivity() {
 
 
                             // calling api
-                            if(storedName=="codeforces")
+                            if(storedName=="codeforces" && storedUid==uid)
                             {
                                 getData(storedCodingProfile)
-                            }else if(storedName=="leetcode")
+                            }else if(storedName=="leetcode" && storedUid==uid)
                             {
                                 getLeetcodeData(storedCodingProfile)
 
@@ -219,68 +219,6 @@ class HomeActivity : AppCompatActivity() {
             val name: String? = data?.getStringExtra("NAME")?.lowercase()
             val codingProfile: String? = data?.getStringExtra("CODING_PROFILE")
 
-            if (name != null && codingProfile != null) {
-                // now insert the coding data to database
-                val firebaseUser = FirebaseAuth.getInstance().currentUser
-                val uid: String? = firebaseUser?.uid
-
-                if (uid != null) {
-                    val dbHelper = DBHelper(this)
-                    // select
-                    val getiingId =dbHelper.getIdCodingProfile(uid,name,codingProfile);
-                    //update
-                    if (getiingId != null) {
-                        // Uid found, do something with it
-                        // run the update query
-                        val rowsAffected=  dbHelper.updateCodingProfile(getiingId,uid,name,codingProfile)
-
-                        if (rowsAffected > 0) {
-                            // Update was successful, and rowsAffected contains the number of rows updated
-                            Log.i(TAG, "Coding profile updated successfully. Rows affected: $rowsAffected")
-                        } else {
-                            // Update failed
-                            Log.e(TAG, "Failed to update coding profile.")
-                        }
-
-
-//                        Log.i(TAG, "Uid found: $resultUid")
-                        // so run the update query
-                    } else {
-                        // Uid not found
-                        // run the insert query
-                        dbHelper.insertCodingProfile(uid,name,codingProfile)
-
-
-                    }
-                    // insert
-
-
-
-//                    dbHelper.insertCodingProfile(uid, name, codingProfile)
-                } else {
-                    Log.e(TAG, "User UID is null")
-                }
-            } else {
-                Log.e(TAG, "Name or codingProfile is null")
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             if (codingProfile != null) {
                 // if name is codeforces then call getdata
@@ -364,6 +302,86 @@ class HomeActivity : AppCompatActivity() {
                         response.body()?.let { responseData ->
                             // Display the data
                             logLeetCodeData(responseData)
+
+                            val pname="leetcode"
+
+                            // inserting to database
+                            if (pname != null && profileId != null) {
+                                // now insert the coding data to database
+                                val firebaseUser = FirebaseAuth.getInstance().currentUser
+                                val uid: String? = firebaseUser?.uid
+
+                                if (uid != null) {
+                                    val dbHelper = DBHelper(applicationContext)
+                                    // select
+                                    val getiingId =dbHelper.getIdCodingProfile(uid,pname,profileId);
+                                    //update
+                                    if (getiingId != null) {
+                                        // Uid found, do something with it
+                                        // run the update query
+                                        val rowsAffected=  dbHelper.updateCodingProfile(getiingId,uid,pname,profileId)
+
+                                        if (rowsAffected > 0) {
+                                            // Update was successful, and rowsAffected contains the number of rows updated
+                                            Log.i(TAG, "Coding profile updated successfully. Rows affected: $rowsAffected")
+                                        } else {
+                                            // Update failed
+                                            Log.e(TAG, "Failed to update coding profile.")
+                                        }
+
+
+//                        Log.i(TAG, "Uid found: $resultUid")
+                                        // so run the update query
+                                    } else {
+                                        // Uid not found
+                                        // run the insert query
+                                        dbHelper.insertCodingProfile(uid,pname,profileId)
+
+
+                                    }
+                                    // insert
+
+
+
+//                    dbHelper.insertCodingProfile(uid, name, codingProfile)
+                                } else {
+                                    Log.e(TAG, "User UID is null")
+                                }
+                            } else {
+                                Log.e(TAG, "Name or codingProfile is null")
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                     } else {
                         // Handle unsuccessful response (e.g., show an error message)
@@ -448,6 +466,88 @@ class HomeActivity : AppCompatActivity() {
                            Log.i(TAG, "  maxRank: ${resultX.maxRank}")
                            // Add more properties as needed
                        }
+
+
+                        val pname="codeforces"
+
+
+
+
+
+
+
+
+
+
+
+
+                       if (pname != null && coding != null) {
+                           // now insert the coding data to database
+                           val firebaseUser = FirebaseAuth.getInstance().currentUser
+                           val uid: String? = firebaseUser?.uid
+
+                           if (uid != null) {
+                               val dbHelper = DBHelper(applicationContext)
+                               // select
+                               val getiingId =dbHelper.getIdCodingProfile(uid,pname,coding);
+                               //update
+                               if (getiingId != null) {
+                                   // Uid found, do something with it
+                                   // run the update query
+                                   val rowsAffected=  dbHelper.updateCodingProfile(getiingId,uid,pname,coding)
+
+                                   if (rowsAffected > 0) {
+                                       // Update was successful, and rowsAffected contains the number of rows updated
+                                       Log.i(TAG, "Coding profile updated successfully. Rows affected: $rowsAffected")
+                                   } else {
+                                       // Update failed
+                                       Log.e(TAG, "Failed to update coding profile.")
+                                   }
+
+
+//                        Log.i(TAG, "Uid found: $resultUid")
+                                   // so run the update query
+                               } else {
+                                   // Uid not found
+                                   // run the insert query
+                                   dbHelper.insertCodingProfile(uid,pname,coding)
+
+
+                               }
+                               // insert
+
+
+
+//                    dbHelper.insertCodingProfile(uid, name, codingProfile)
+                           } else {
+                               Log.e(TAG, "User UID is null")
+                           }
+                       } else {
+                           Log.e(TAG, "Name or codingProfile is null")
+                       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                        if (!resultList.isNullOrEmpty()) {
                            val firstResult = resultList[0]
