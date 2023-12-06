@@ -66,96 +66,96 @@
 
     </RelativeLayout>
 
-<!--    body content-->
-    <RelativeLayout
-        android:id="@+id/userDetailsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="346dp"
-        android:layout_below="@id/searchLayout"
-        android:layout_marginTop="16dp">
+<!--&lt;!&ndash;    body content&ndash;&gt;-->
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/userDetailsLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="346dp"-->
+<!--        android:layout_below="@id/searchLayout"-->
+<!--        android:layout_marginTop="16dp">-->
 
-        <ImageView
-            android:id="@+id/avatarImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_profile_image" />
-        <!-- Dynamically created TextViews for ResultX properties -->
+<!--        <ImageView-->
+<!--            android:id="@+id/avatarImageView"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            android:src="@drawable/default_profile_image" />-->
+<!--        &lt;!&ndash; Dynamically created TextViews for ResultX properties &ndash;&gt;-->
 
-        <TextView
-            android:id="@+id/firstNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/avatarImageView"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:text="First Name: "
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/firstNameTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/avatarImageView"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:text="First Name: "-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/lastNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/firstNameTextView"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="Last Name: "
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/lastNameTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/firstNameTextView"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="Last Name: "-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/handleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lastNameTextView"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="Handle: "
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/handleTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/lastNameTextView"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="Handle: "-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/ratingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/handleTextView"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            android:text="Rating: "
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/ratingTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/handleTextView"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:text="Rating: "-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/maxratingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ratingTextView"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="Max_Rating: "
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/maxratingTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/ratingTextView"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="Max_Rating: "-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/rankTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/maxratingTextView"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Current_Rank: "
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/rankTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/maxratingTextView"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:text="Current_Rank: "-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/maxrankTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rankTextView"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="Max_Rank: "
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/maxrankTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/rankTextView"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:text="Max_Rank: "-->
+<!--            android:textSize="16sp" />-->
 
-        <!-- Add more TextViews for other properties as needed -->
+<!--        &lt;!&ndash; Add more TextViews for other properties as needed &ndash;&gt;-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
 
     <!-- Bottom Navigation -->
