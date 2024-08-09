@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- cards styles -->
+	<style name="CyborgDarkTheme" parent="Theme.AppCompat">
+		<item name="colorPrimary">@color/cyborgDarkColorPrimary</item>
+		<item name="colorPrimaryDark">@color/cyborgDarkColorPrimaryDark</item>
+		<item name="colorAccent">@color/cyborgDarkColorAccent</item>
+		<!-- Add more style attributes as needed -->
+	</style>
+<!--	<style name="CyborgDarkText">-->
+<!--		<item name="android:textSize">16sp</item>-->
+<!--		<item name="android:textColor">#FFF</item>-->
+<!--		&lt;!&ndash; Add more text styling attributes as needed &ndash;&gt;-->
+<!--	</style>-->
+
+	<style name="CyborgDarkEditText" parent="android:Widget.EditText">
+		<item name="android:backgroundTint">@android:color/holo_green_light</item>
+		<item name="android:textColor">@android:color/white</item>
+		<item name="android:textColorHint">@android:color/darker_gray</item>
+		<!-- Add more style attributes as needed -->
+	</style>
+
+
+	<!--	<style name="CyborgDarkText" parent="android:Widget.TextView">-->
+<!--		<item name="android:textColor">@android:color/white</item>-->
+<!--		&lt;!&ndash; Add more style attributes as needed &ndash;&gt;-->
+<!--	</style>-->
+
+
+</resources>
